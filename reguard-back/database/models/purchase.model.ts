@@ -1,7 +1,7 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import { database as db } from '../database';
 
-interface PurchaseAttributes {
+export interface PurchaseAttributes {
     id: string, //uuid
     invoice: string,
     totalSaleAmount: number,
@@ -19,31 +19,7 @@ interface PurchaseAttributes {
     updatedAt?: Date,
 }
 
-export interface PurchaseInput extends Optional<PurchaseAttributes, 'id'> { }
-export interface PurchaseOutput extends Required<PurchaseAttributes> { }
-
-class Purchase extends Model<PurchaseAttributes, PurchaseInput> implements PurchaseAttributes {
-    public id!: string
-    public invoice!: string
-    public totalSaleAmount!: number
-    public invoiceDate: Date
-    public deliveryDate: Date
-    public name: string
-    public description: string
-    public sku: string
-    public protectionPlanName: string
-    public protectionPlanDuration: number
-    public protectionPlanPrice: number
-    public protectionPlanPeriod: string
-    public customerId: string //uuid,
-
-    // timestamps
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
-    public readonly deletedAt!: Date;
-}
-
-Purchase.init({
+export const Purchase = db.define("purchase", {
     id: {
         type: DataTypes.STRING,
         primaryKey: true
@@ -98,6 +74,5 @@ Purchase.init({
     },
 }, {
     timestamps: true,
-    sequelize: db,
     paranoid: true //invokes a soft delete on the model by adding a deletedAt attribute that marks records as deleted when invoking destroy
 })

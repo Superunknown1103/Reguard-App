@@ -1,7 +1,5 @@
-import * as dotenv from 'dotenv'
-dotenv.config()
-console.log(process.env)
 import { database, createDatabase } from "./database";
+
 require('./models/customer.model.ts');
 require('./models/purchase.model.ts');
 require('./models/claim.model.ts');

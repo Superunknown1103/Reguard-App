@@ -1,7 +1,7 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import { database as db } from '../database';
 
-interface ClaimAttributes {
+export interface ClaimAttributes {
     id: string, //uuid
     status: string,
     solution: string,
@@ -14,26 +14,8 @@ interface ClaimAttributes {
     damageDate: string
 }
 
-export interface ClaimInput extends Optional<ClaimAttributes, 'id'> { }
-export interface ClaimOutput extends Required<ClaimAttributes> { }
 
-class Claim extends Model<ClaimAttributes, ClaimInput> implements ClaimAttributes {
-    public id!: string
-    public status!: string
-    public solution!: string
-    public customerId: string
-    public productPurchaseId: string
-    public productCondition: string
-    public damageDescription: string
-    public damageDate: string
-
-    // timestamps
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
-    public readonly deletedAt!: Date;
-}
-
-Claim.init({
+export const Claim = db.define('claim', {
     id: {
         type: DataTypes.STRING,
         primaryKey: true
@@ -68,6 +50,5 @@ Claim.init({
     }
 }, {
     timestamps: true,
-    sequelize: db,
     paranoid: true //invokes a soft delete on the model by adding a deletedAt attribute that marks records as deleted when invoking destroy
-})
+});
