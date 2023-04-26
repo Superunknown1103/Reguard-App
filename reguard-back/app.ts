@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { getAllCustomers, getCustomerById, getCustomerCount } from './api/CustomersApi';
-import { getAllClaims, getClaimById, getClaimCount } from "./api/ClaimsApi";
+import { getAllClaims, getAllClaimsByCustomerId, getClaimById, getClaimCount } from "./api/ClaimsApi";
 import { getAllPurchases, getPurchaseById, getPurchaseCount } from "./api/PurchasesApi";
 
 // Create an Express app
@@ -16,6 +16,7 @@ app.get('/customers/getCustomerCount', getCustomerCount)
 app.get('/claims/', getAllClaims);
 app.get('/claims/getClaimById/:id', getClaimById); 
 app.get('/claims/getClaimCount', getClaimCount)
+app.get('/claims/getAllClaimsByClientId/:customerId', getAllClaimsByCustomerId);
 app.get('/purchases/', getAllPurchases);
 app.get('/purchases/getPurchaseById/:id', getPurchaseById); 
 app.get('/purchases/getPurchaseCount', getPurchaseCount)

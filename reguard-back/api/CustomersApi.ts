@@ -4,7 +4,11 @@ import { database } from '../database/database';
 
 export const getAllCustomers = async (req: Request, res: Response) => {
     try {
-        const customers = await Customer.findAll();
+        const { limit = 10, page = 1 } = req.query;
+        const parsedLimit = parseInt(limit as string, 10);
+        const offset = (page - 1) * parsedLimit;
+
+        const customers = await Customer.findAll(({ limit: parsedLimit, offset }));
         res.json(customers);
     } catch (err) {
         console.error('Error fetching customers:', err);

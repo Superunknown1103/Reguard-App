@@ -35,3 +35,19 @@ export const getClaimCount = async (req: Request, res: Response) => {
         res.status(500).send('An error occurred while fetching customers');
     }
 };
+
+export const getAllClaimsByCustomerId = async (req: Request, res: Response) => {
+    const customerId = req.params.customerId;
+    console.log(customerId);
+  
+    try {
+      const claims = await Claim.findAll({
+        where: { customerId },
+      });
+  
+      res.json(claims);
+    } catch (err) {
+      console.error('Error fetching claims:', err);
+      res.status(500).send('An error occurred while fetching claims');
+    }
+  }; 
