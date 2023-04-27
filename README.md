@@ -6,7 +6,7 @@ The system architecture for this solution can be viewed here: https://lucid.app/
 - this application uses mysql. To initalize the database, run database.ts file with the command `ts-node database/index.ts`. 
 - you will then need to seed the database, make sure to drop the csv files into a new `seed_data` folder under the `database` folder. Then run the command `ts-node database/seed.ts` to seed data.
 
-## API Design -> 
+## API Design
 
 - to start the backend express server, run app.js. 
 - Once that is running, take a look at the possible endpoints listed under the routes comment in reguard-back/app.ts. You can use your browser and visit localhost://3000/ - replace 3000 with a different port if you specified one in your process.env and call these routes to take a look at the seeded data returned by the api. 
