@@ -1,7 +1,6 @@
 import mysql from 'mysql2';
 import * as dotenv from 'dotenv'
 dotenv.config()
-console.log(process.env)
 import { Sequelize } from 'sequelize';
 
 const databaseName = "reguard_sql";
@@ -19,3 +18,4 @@ export const database = new Sequelize('reguard_sql', 'root', process.env.DB_PASS
   port: 3306,
   password: process.env.DB_PASS
 });
+

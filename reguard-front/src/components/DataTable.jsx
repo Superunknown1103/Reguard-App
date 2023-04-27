@@ -17,8 +17,6 @@ const useStyles = makeStyles({
 export default function DataTable(props) {
   const classes = useStyles();
 
-  console.log('Here are my new rows', props.rows);
-
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">

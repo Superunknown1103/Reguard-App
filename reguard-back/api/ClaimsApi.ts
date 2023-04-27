@@ -5,7 +5,7 @@ export const getAllClaims = async (req: Request, res: Response) => {
     try {
         const { limit = 10, page = 1 } = req.query;
         const parsedLimit = parseInt(limit as string, 10);
-        const offset = (page - 1) * parsedLimit;
+        const offset = (page as number - 1) * parsedLimit;
         const count = await Claim.count();
         const claims = await Claim.findAll(({ limit: parsedLimit, offset }));
         res.json({claims, count});

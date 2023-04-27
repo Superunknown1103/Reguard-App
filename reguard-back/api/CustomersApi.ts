@@ -5,7 +5,7 @@ export const getAllCustomers = async (req: Request, res: Response) => {
     try {
         const { limit = 10, page = 1 } = req.query;
         const parsedLimit = parseInt(limit as string, 10);
-        const offset = (page - 1) * parsedLimit;
+        const offset = (page as number - 1) * parsedLimit;
         const count = await Customer.count();
         const customers = await Customer.findAll(({ limit: parsedLimit, offset }));
         res.json({customers, count});

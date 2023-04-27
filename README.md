@@ -8,14 +8,19 @@ The system architecture for this solution can be viewed here: https://lucid.app/
 
 ## API Design
 
-- to start the backend express server, run app.js. 
+- to start the backend express server, run app.ts with the command `ts-node app.ts`. Make sure you have `ts-node` installed to run this command.
 - Once that is running, take a look at the possible endpoints listed under the routes comment in reguard-back/app.ts. You can use your browser and visit localhost://3000/ - replace 3000 with a different port if you specified one in your process.env and call these routes to take a look at the seeded data returned by the api. 
 
 ## UI 
 
-- Switch to the front end (reguard-front) folder and run npm start in your terminal. It should start a front-end application in your browser on port 3006.
+- Switch to the front end (reguard-front) folder in a new terminal window and run `npm start` in your terminal. Ensure the server is running so that requests can be made to the back-end. A react application should open in your browser on port 3006.
 - The UI renders a table, which should show customers by default. You can click on the Nav component buttons (Claims, Customers, Purchases) to see different data displayed in the table. 
 - I was going to add a detail page for each row, but figured I'd spent enough time on the project as it was and this was something we can add later. By the time I had gotten it to this state, I realized I could have used React Router for rendering my table as well, so that's something to consider adding in the paired interview.
 
 Thanks!
+
+## Tests
+
+- Tests have been written for the APIs. To run tests, make sure the backend server is running. 
+- Open a new terminal window, and type `npm run test`.
 

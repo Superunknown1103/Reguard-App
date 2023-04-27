@@ -1,12 +1,13 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cors from 'cors';
 import { getAllCustomers, getCustomerById, getCustomerCount } from './api/CustomersApi';
 import { getAllClaims, getAllClaimsByCustomerId, getClaimById, getClaimCount } from "./api/ClaimsApi";
 import { getAllPurchases, getPurchaseById, getPurchaseCount } from "./api/PurchasesApi";
 
 // Create an Express app
-const app = express();
-const cors = require('cors');
+export const app = express();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors())

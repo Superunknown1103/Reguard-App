@@ -16,8 +16,6 @@ function App() {
     await fetch(`http://localhost:3000/${dataType}/getAll${dataType}?limit=10&page=${page}`)
     .then(res => res.json())
     .then((result) => { 
-      console.log('Here is my api result ', result);
-      console.log(dataType)
       setTableData(result[dataType])
       setRowCount(result.count);
     })

@@ -5,7 +5,7 @@ export const getAllPurchases = async (req: Request, res: Response) => {
     try {
         const { limit = 10, page = 1 } = req.query;
         const parsedLimit = parseInt(limit as string, 10);
-        const offset = (page - 1) * parsedLimit;
+        const offset = (page as number - 1) * parsedLimit;
         const count = await Purchase.count();
         const purchases = await Purchase.findAll(({ limit: parsedLimit, offset }));
         res.json({purchases, count});
@@ -20,7 +20,7 @@ export const getPurchaseById = async (req: Request, res: Response) => {
     try {
         const purchase = await Purchase.findByPk(id);
         if (!purchase) {
-            return res.status(404).send(`purchase with ID ${id} not found`);
+            return res.status(404).send(`Purchase with ID ${id} not found`);
         }
         res.json(purchase);
     } catch (err) {
