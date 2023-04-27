@@ -1,11 +1,14 @@
-import express, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { Purchase } from '../database/models/purchase.model';
-import { database } from '../database/database';
 
 export const getAllPurchases = async (req: Request, res: Response) => {
     try {
-        const purchase = await Purchase.findAll();
-        res.json(purchase);
+        const { limit = 10, page = 1 } = req.query;
+        const parsedLimit = parseInt(limit as string, 10);
+        const offset = (page - 1) * parsedLimit;
+        const count = await Purchase.count();
+        const purchases = await Purchase.findAll(({ limit: parsedLimit, offset }));
+        res.json({purchases, count});
     } catch (err) {
         console.error('Error fetching purchases:', err);
         res.status(500).send('An error occurred while fetching purchases');

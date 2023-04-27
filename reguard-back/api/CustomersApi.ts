@@ -1,15 +1,14 @@
-import express, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { Customer } from '../database/models/customer.model';
-import { database } from '../database/database';
 
 export const getAllCustomers = async (req: Request, res: Response) => {
     try {
         const { limit = 10, page = 1 } = req.query;
         const parsedLimit = parseInt(limit as string, 10);
         const offset = (page - 1) * parsedLimit;
-
+        const count = await Customer.count();
         const customers = await Customer.findAll(({ limit: parsedLimit, offset }));
-        res.json(customers);
+        res.json({customers, count});
     } catch (err) {
         console.error('Error fetching customers:', err);
         res.status(500).send('An error occurred while fetching customers');

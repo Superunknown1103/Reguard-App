@@ -1,11 +1,14 @@
-import express, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { Claim } from '../database/models/claim.model';
-import { database } from '../database/database';
 
 export const getAllClaims = async (req: Request, res: Response) => {
     try {
-        const claim = await Claim.findAll();
-        res.json(claim);
+        const { limit = 10, page = 1 } = req.query;
+        const parsedLimit = parseInt(limit as string, 10);
+        const offset = (page - 1) * parsedLimit;
+        const count = await Claim.count();
+        const claims = await Claim.findAll(({ limit: parsedLimit, offset }));
+        res.json({claims, count});
     } catch (err) {
         console.error('Error fetching claims:', err);
         res.status(500).send('An error occurred while fetching claims');
