@@ -15,29 +15,52 @@ const useStyles = makeStyles({
 });
 
 export default function DataTable(props) {
+  const [tableData, setTableData] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [detailView, setDetailView] = useState('');
+
   const classes = useStyles();
 
-  return (
+  const getTableData = async () => {
+    (async () => {
+      const query = window.location.href.split('/').pop();
+      const uuidRegex = new RegExp('^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$');
+      const detailView = uuidRegex.test(query);
+    })
+    await fetch(`http://localhost:3000/${props.dataType}/${detailView ? query : ''}`)
+      .then(res => res.json())
+      .then((result) => {
+        setTableData(result[props.dataType])
+        setIsDataLoaded(true);
+        console.log(tableData);
+      });
+  };
+
+  useEffect(() => {
+    getTableData();
+  }, [isDataLoaded]);
+
+
+  return isDataLoaded ? (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-          {Object.keys(props.rows[0]).map((key) => { 
-            return <TableCell align="right">{key}</TableCell>
-        })}
+            {Object.keys(tableData[0]).map((key) => {
+              return <TableCell align="right">{key}</TableCell>
+            })}
           </TableRow>
         </TableHead>
         <TableBody>
-        {props.rows.map((row) => (
-             <TableRow onClick={() => {alert(row.id)}} key={row.id}>
-              {Object.values(row).map((value) => { 
+          {tableData.map((row) => (
+            <TableRow onClick={() => { alert(row.id) }} key={row.id}>
+              {Object.values(row).map((value) => {
                 return <TableCell align="right">{value}</TableCell>
               })}
             </TableRow>
           ))}
-
         </TableBody>
       </Table>
     </TableContainer>
-  );
+  ) : (<div>Loading data...</div>)
 }
